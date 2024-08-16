@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    function score(input) {
+        return [
+            0.15186579511260603 + input[0] * 0.01569001459038012 + input[1] * 0.041274106110279235 + input[2] * -0.06326884778796311 + input[3] * 0.25509148851273983 + input[4] * 0.17824992724655678 + input[5] * 0.6516626415885746,
+            -1.7463614872194353 + input[0] * -0.00946817981450497 + input[1] * 0.004645934684166104 + input[2] * -0.0047520488031799245 + input[3] * 0.12617108196551577 + input[4] * 0.2506127423011174 + input[5] * 0.9677902660657829,
+            1.8153184687134258 + input[0] * 0.1392888493412051 + input[1] * 0.19610221438563258 + input[2] * -0.17353999403044054 + input[3] * -0.9587162890367101 + input[4] * 0.541903573534261 + input[5] * 0.9875244369131438,
+            -0.2208227766065813 + input[0] * -0.14551068411707907 + input[1] * -0.2420222551800832 + input[2] * 0.24156089062158456 + input[3] * 0.5774537185584546 + input[4] * -0.9707662430819304 + input[5] * -2.6069773445675057
+        ];
+    }
+</script>
+</head>
+<body>
+  <h1>Car Evaluation Prediction</h1>
+    <form id="predictionForm">
+        <label for="buying">Buying:</label>
+        <input type="text" id="buying" name="buying"><br><br>
+        
+        <label for="maint">Maint:</label>
+        <input type="text" id="maint" name="maint"><br><br>
+        
+        <label for="doors">Doors:</label>
+        <input type="text" id="doors" name="doors"><br><br>
+        
+        <label for="persons">Persons:</label>
+        <input type="text" id="persons" name="persons"><br><br>
+        
+        <label for="lug_boot">Lug Boot:</label>
+        <input type="text" id="lug_boot" name="lug_boot"><br><br>
+        
+        <label for="safety">Safety:</label>
+        <input type="text" id="safety" name="safety"><br><br>
+        
+        <button type="button" onclick="predictClass()">Predict</button>
+    </form>
+    <h2>Prediction: <span id="predictionResult"></span></h2>
+</body>
+<script>
+  function predictClass() {
+      // Lấy giá trị từ các trường nhập liệu
+      const buying = parseFloat(document.getElementById('buying').value);
+      const maint = parseFloat(document.getElementById('maint').value);
+      const doors = parseFloat(document.getElementById('doors').value);
+      const persons = parseFloat(document.getElementById('persons').value);
+      const lug_boot = parseFloat(document.getElementById('lug_boot').value);
+      const safety = parseFloat(document.getElementById('safety').value);
+
+      // Chuẩn bị đầu vào cho mô hình
+      const input = [buying, maint, doors, persons, lug_boot, safety];
+      
+      // Gọi hàm dự đoán từ mô hình
+      const predictions = score(input);
+      
+      // Tìm lớp dự đoán có giá trị cao nhất
+      const predictedClass = predictions.indexOf(Math.max(...predictions));
+      
+      // Hiển thị kết quả dự đoán
+      document.getElementById('predictionResult').textContent = predictedClass;
+  }
+</script>
+</html>

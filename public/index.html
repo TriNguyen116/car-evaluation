@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Car Evaluation Prediction</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function btnSubmit_Click() {
+            const URL = 'https://tri22012035.pythonanywhere.com/predict-car-class';
+            const input = {
+                buying: document.getElementById('buying').value,
+                maint: document.getElementById('maint').value,
+                doors: document.getElementById('doors').value,
+                persons: document.getElementById('persons').value,
+                lug_boot: document.getElementById('lug_boot').value,
+                safety: document.getElementById('safety').value
+            };
+            
+            axios.post(URL, input).then((response) => {
+                const result = response.data;
+                if (result) {
+                    document.getElementById('txtResult').value = result;
+                } else {
+                    alert('Error in prediction');
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4"><i class="fas fa-car"></i> Car Evaluation Prediction</h2>
+        <div class="row">
+            <div class="col-md-6 mt-3">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Original Column</th>
+                            <th>Unique Values</th>
+                            <th>Encoded Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Buying</td>
+                            <td>vhigh, high, med, low</td>
+                            <td>3, 0, 2, 1</td>
+                        </tr>
+                        <tr>
+                            <td>Maint</td>
+                            <td>vhigh, high, med, low</td>
+                            <td>3, 0, 2, 1</td>
+                        </tr>
+                        <tr>
+                            <td>Doors</td>
+                            <td>2, 3, 4, 5more</td>
+                            <td>0, 1, 2, 3</td>
+                        </tr>
+                        <tr>
+                            <td>Persons</td>
+                            <td>2, 4, more</td>
+                            <td>0, 1, 2</td>
+                        </tr>
+                        <tr>
+                            <td>Lug_boot</td>
+                            <td>small, med, big</td>
+                            <td>2, 1, 0</td>
+                        </tr>
+                        <tr>
+                            <td>Safety</td>
+                            <td>low, med, high</td>
+                            <td>1, 2, 0</td>
+                        </tr>
+                        <tr>
+                            <td>Class</td>
+                            <td>unacc, acc, vgood, good</td>
+                            <td>2, 0, 3, 1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group ">
+                        <label for="buying">Buying:</label>
+                        <input type="text" id="buying" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="maint">Maint:</label>
+                        <input type="text" id="maint" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="doors">Doors:</label>
+                        <input type="text" id="doors" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="persons">Persons:</label>
+                        <input type="text" id="persons" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="lug_boot">Lug Boot:</label>
+                        <input type="text" id="lug_boot" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="safety">Safety:</label>
+                        <input type="text" id="safety" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtResult">Prediction:</label>
+                        <input type="text" id="txtResult" class="form-control" readonly>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block" onclick="btnSubmit_Click()">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
