@@ -19,10 +19,28 @@
                 safety: document.getElementById('safety').value
             };
             
+            // Validate input
+            const validValues = {
+                buying: ['vhigh', 'high', 'med', 'low'],
+                maint: ['vhigh', 'high', 'med', 'low'],
+                doors: ['2', '3', '4', '5more'],
+                persons: ['2', '4', 'more'],
+                lug_boot: ['small', 'med', 'big'],
+                safety: ['low', 'med', 'high']
+            };
+
+            for (let key in input) {
+                if (!validValues[key].includes(input[key])) {
+                    document.getElementById('error-msg').innerText = 'Invalid input for ' + key;
+                    return;
+                }
+            }
+
             axios.post(URL, input).then((response) => {
                 const result = response.data;
                 if (result) {
                     document.getElementById('txtResult').value = result;
+                    document.getElementById('error-msg').innerText = '';
                 } else {
                     alert('Error in prediction');
                 }
@@ -31,7 +49,7 @@
     </script>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-3">
         <h2 class="text-center mb-4"><i class="fas fa-car"></i> Car Evaluation Prediction</h2>
         <div class="row">
             <div class="col-md-6 mt-3">
@@ -112,6 +130,7 @@
                         <label for="txtResult">Prediction:</label>
                         <input type="text" id="txtResult" class="form-control" readonly>
                     </div>
+                    <div id="error-msg" class="text-danger text-center mb-3"></div>
                     <button type="button" class="btn btn-primary btn-block" onclick="btnSubmit_Click()">SUBMIT</button>
                 </form>
             </div>
